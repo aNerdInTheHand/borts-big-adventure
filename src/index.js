@@ -1,17 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Phaser from 'phaser';
+import logoImg from './assets/logo.png';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class MyGame extends Phaser.Scene
+{
+    constructor ()
+    {
+        super();
+    }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+    preload ()
+    {
+        this.load.image('logo', logoImg);
+    }
+      
+    create ()
+    {
+        const logo = this.add.image(400, 150, 'logo');
+      
+        this.tweens.add({
+            targets: logo,
+            y: 450,
+            duration: 2000,
+            ease: "Power2",
+            yoyo: true,
+            loop: -1
+        });
+    }
+}
+
+const config = {
+    type: Phaser.AUTO,
+    parent: 'phaser-example',
+    width: 800,
+    height: 600,
+    scene: MyGame
+};
+
+const game = new Phaser.Game(config);
